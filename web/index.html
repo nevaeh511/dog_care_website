@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Let Slip the Dogs of Moore</title>
+    
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/my-css.css">
+</head>
+<body>
+    <header class="page-header">
+        <div class='container'>
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 id="main-header"><span>Let Slip the Dogs of Moore</span></h1>
+                </div>
+            </div>
+        </div>
+    </header>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="row toggle-view-btns">
+                <div id="list-icon" class="col-lg-1 col-lg-offset-11" title="List View">
+                    <button class="btn btn-default btn-sm active">
+                        <span class="glyphicon glyphicon-th-list" ></span>
+                    </button>
+                </div>
+                <div id="tile-icon" class="col-lg-1" title="Tile View">
+                    <button class="btn btn-default btn-sm active" >
+                        <span class="glyphicon glyphicon-th"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Add Dog Form Modal -->
+    <div class="modal fade container" id="addDogModal" tabindex="-1" role="dialog" aria-labelledby="addDogModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <img src="dog-photos/dogs-in-line-header-background.jpg" alt="line of dogs">
+                    <h4 class="modal-title" id="myModalLabel">Add a Dog</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="form" method="post">
+                        <div class="row">
+                            <div class="form-group col-lg-3">
+                                <label for="inputPetName">Pet Name</label>
+                                <input type="text" class="form-control" id="petName" placeholder="name" required>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label for="inputOwnerName">Owner Name</label>
+                                <input type="text" class="form-control" id="ownerName" placeholder="name" required>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label for="inputBreedName">Breed Type</label>
+                                <input type="text" class="form-control" id="breedType" placeholder="breed" required>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label for="inputAge">Age</label>
+                                <input type="text" class="form-control" id="ageField" placeholder="age" required>
+                            </div>
+                        </div>
+                        <div class="drowpDownGroup row">
+                            <div class="form-group col-lg-3">
+                                <label for="sel1">Neutered:</label>
+                                <!--TODO change select to be radio buttons-->
+                                  <select class="form-control" id=neutered>
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label for="sel1">Licensed:</label>
+                                <!--TODO change select to be radio buttons-->
+                                <select class="form-control" id=licensed>
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label for="sel1">Shots:</label>
+                                <!--TODO change select to be radio buttons-->
+                                <select class="form-control" id=shots>
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                </select>
+                            </div>  
+                        </div>  
+                        <div class="form-group row">
+                            <div class="col-lg-5">
+                                <label for="exampleInputFile">Import Photo</label>
+                                <input type="file" id="inputPhoto" name="displayImage">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <h4><span id="addDogSuccessMsg"></span></h4>
+                            <button id="addSubmitBtn" type="submit" class="btn btn-success">Submit</button>
+                            <button type="button" id="addDogModalCloseBtn" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div> <!-- end modal -->
+    
+    <!--Edit a dog Modal-->
+    <div class="modal fade" id="editDogModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <img src="dog-photos/dogs-in-line-header-background.jpg" alt="line of dogs">
+                    <h4 class="modal-title" id="editModalLabel">Edit Dog</h4>
+                </div>
+                <div class="modal-body" id="edit-dog-modal">
+                    <form id="edit-form" method="put">
+                        <div class="form-group">
+                            <label for="inputPetName">Pet Name</label>
+                            <input type="text" class="form-control" id="editPetName">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputOwnerName">Owner Name</label>
+                            <input type="text" class="form-control" id="editOwnerName">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputBreedName">Breed Type</label>
+                            <input type="text" class="form-control" id="editBreedType">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputAge">Age</label>
+                            <input type="text" class="form-control" id="editAgeField">
+                        </div>
+                        <div class="form-group">
+                            <label for="sel1">Neutered:</label>
+                            <!--TODO change select to be radio buttons-->
+                              <select class="form-control" id=editNeuteredField>
+                                <option id="currNeutered"></option>
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="license">Licensed:</label>
+                            <!--TODO change select to be radio buttons-->
+                            <select class="form-control" id=editLicensedField>
+                                <option id="currLicense"></option>
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="shots">Shots:</label>
+                            <!--TODO change select to be radio buttons-->
+                            <select class="form-control" id=editShotsField>
+                                <option id="currShots"></option>
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </div>
+                    
+                        <div class="modal-footer">
+                            <h4><span id="editDogSuccessMsg"></span></h4>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" id="editSaveBtn" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div><!--end Edit dog modal-->
+    
+    <div id="mainContent" class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <!-- Add Dog Button -->
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary btn-sm addDogBtn" data-toggle="modal" data-target="#addDogModal">
+                  <span class="glyphicon glyphicon-plus"></span>
+                  <span >Add Dog</span>
+                </button>
+                <h2><span class="label label-default">Pet Information</span></h2>
+            </div>
+            <div class="col-md-1 col-md-offset-9">
+                <button class="undo btn btn-info" >
+                    <span class="text-default glyphicon glyphicon-repeat"></span>
+                    <span class="text-default">Undo</span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- tile view -->
+        <div id="tile-container"></div>
+        <!-- table view : default view -->
+        <table id="list-container" class="table table-striped table-hover">
+            <thead>
+                <tr id="titles" class="bg-primary">
+                    <th></th>
+                    <th id="name"><a>NAME</a>
+                        <span id="name-top-arrow" class="glyphicon glyphicon-triangle-top"></span>
+                        <span id="name-bottom-arrow" class="glyphicon glyphicon-triangle-bottom"></span>
+                    </th>
+                    <th id="owner"><a>OWNER</a>
+                        <span id="owner-top-arrow" class="glyphicon glyphicon-triangle-top"></span>
+                        <span id="owner-bottom-arrow" class="glyphicon glyphicon-triangle-bottom"></span>
+                    </th>
+                    <th id="breed"><a>BREED</a>
+                        <span id="breed-top-arrow" class="glyphicon glyphicon-triangle-top"></span>
+                        <span id="breed-bottom-arrow" class="glyphicon glyphicon-triangle-bottom"></span>
+                    </th>
+                    <th id="age"><a>AGE</a>
+                        <span id="age-top-arrow" class="glyphicon glyphicon-triangle-top"></span>
+                        <span id="age-bottom-arrow" class="glyphicon glyphicon-triangle-bottom"></span>
+                    </th>
+                    <th>NEUTERED/SPAYED</th>
+                    <th>LICENSED</th>
+                    <th>SHOTS</th>
+                    <th class="deleteAction">ACTIONS</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+            </tbody>
+        </table>
+    </div>
+    <footer>
+        <!-- footer information -->
+    </footer>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-modal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+<script>
+/*global $*/
+
+/*let variables*/
+let socket = io();
+let tempDog = {};
+let dogList = [];
+let deadDogs = [];
+let isClicked = [];
+//Ready function
+$(function(){
+    loadDogsFromServer();
+    $('#list-icon').click(function(){
+        $('#tile-container').hide();
+        $('#list-container').show();
+    });
+    $('#tile-icon').click(function(){
+        $('#list-container').hide();
+        $('#tile-container').show();
+    });
+    /*DOG FORM DROPDOWN EVENT*/                
+    // $('.addDogBtn').click(function() {
+    //     $('.addDogForm').slideToggle();
+    // });
+    /*ADD DOG ON SUBMIT EVENT*/
+    $('#form').submit(function(event){
+        event.preventDefault();
+        //collect form information
+        let dog = {
+            "photo": $('#inputPhoto').val(),
+            "name": $('#petName').val(),
+            "owner": $('#ownerName').val(),
+            "breed": $('#breedType').val(),
+            "age": $('#ageField').val(),
+            "isNeutered": $('#neutered').val(),
+            "hasLicense": $('#licensed').val(),
+            "hasShots": $('#shots').val()
+        };
+        //clear the form values
+        $( '#form' ).each(function(){
+            this.reset();
+        });
+        //store the dog json to the server
+        storeDog(dog);
+    });
+    
+    $('#edit-form').submit(function(event){
+        event.preventDefault();
+        let editedDog = gatherEditedDogValues();
+        
+        if(areDifferentDogs(tempDog, editedDog)){
+            console.log('dog has been changed');
+            makeUpdateToDog(editedDog);
+        }
+    });
+    sortingHandlers();
+    undoDeletedDogHandler();
+});//end ready function
+
+function sortingHandlers(){
+    $('#name').click(sortNameField);
+    $('#owner').click(sortOwnerField);
+    $('#breed').click(sortBreedField);
+    $('#age').click(sortAgeField);
+}
+
+function compareNumbers(numA, numB){
+    return numA - numB;
+}
+
+function compareStrings(strA, strB){
+    let a = strA.toLowerCase();
+    let b = strB.toLowerCase();
+    
+    if (a < b) {
+        return -1;
+    }
+    if (a > b) {
+        return 1;
+    }
+    // names must be equal
+    return 0;
+}
+
+function compareDogAges(dogA, dogB){
+    return compareNumbers(dogA.age, dogB.age);
+}
+
+function compareDogNames(dogA, dogB){
+    return compareStrings(dogA.name, dogB.name);
+}
+
+function compareOwnerNames(dogA, dogB){
+    return compareStrings(dogA.owner, dogB.owner)
+}
+
+function compareBreedNames(dogA, dogB){
+    return compareStrings(dogA.breed, dogB.breed);
+}
+
+function sortAgeField(){
+    console.log('entered sort age field');
+    //if name, owner or breed fields have been clicked, hide their sort arrows
+    if(isClicked[0] !== undefined || isClicked[1] !== undefined || isClicked[2] !== undefined){
+        $('#name-top-arrow').css('visibility', 'hidden');
+        $('#name-bottom-arrow').css('visibility', 'hidden');
+        $('#owner-top-arrow').css('visibility', 'hidden');
+        $('#owner-bottom-arrow').css('visibility', 'hidden');
+        $('#breed-top-arrow').css('visibility', 'hidden');
+        $('#breed-bottom-arrow').css('visibility', 'hidden');
+    }
+    //if age field has not been clicked ascending, show the up arrow 
+    if(!isClicked[3]){
+        console.log(isClicked);
+        $('#age-top-arrow').css('visibility', 'visible');
+        $('#age-bottom-arrow').css('visibility', 'hidden');
+        dogList.sort(compareDogAges);
+        isClicked[3] = true;
+    //if breed field has been clicked desending, show the down arrow
+    }else{
+        console.log(isClicked);
+        $('#age-top-arrow').css('visibility', 'hidden');
+        $('#age-bottom-arrow').css('visibility', 'visible');
+        dogList.reverse();
+        isClicked[3] = false;
+    }
+    displaySortedList();
+}
+
+function sortBreedField(){
+    //if name or owner or age fields have been clicked, hide their sort arrows
+    if(isClicked[0] !== undefined || isClicked[1] !== undefined || isClicked[3] !== undefined){
+        $('#name-top-arrow').css('visibility', 'hidden');
+        $('#name-bottom-arrow').css('visibility', 'hidden');
+        $('#owner-top-arrow').css('visibility', 'hidden');
+        $('#owner-bottom-arrow').css('visibility', 'hidden');
+        $('#age-top-arrow').css('visibility', 'hidden');
+        $('#age-bottom-arrow').css('visibility', 'hidden');
+    }
+    //if breed field has not been clicked ascending, show the up arrow 
+    if(!isClicked[2]){
+        console.log(isClicked);
+        $('#breed-top-arrow').css('visibility', 'visible');
+        $('#breed-bottom-arrow').css('visibility', 'hidden');
+        dogList.sort(compareBreedNames);
+        isClicked[2] = true;
+    //if breed field has been clicked desending, show the down arrow
+    }else{
+        console.log(isClicked);
+        $('#breed-top-arrow').css('visibility', 'hidden');
+        $('#breed-bottom-arrow').css('visibility', 'visible');
+        dogList.reverse();
+        isClicked[2] = false;
+    }
+    displaySortedList();
+}
+
+function sortOwnerField(){
+    //if name or breed or age fields have been clicked, hide their sort arrows
+    if(isClicked[0] !== undefined || isClicked[2] !== undefined || isClicked[3] !== undefined){
+        $('#name-top-arrow').css('visibility', 'hidden');
+        $('#name-bottom-arrow').css('visibility', 'hidden');
+        $('#breed-top-arrow').css('visibility', 'hidden');
+        $('#breed-bottom-arrow').css('visibility', 'hidden');
+        $('#age-top-arrow').css('visibility', 'hidden');
+        $('#age-bottom-arrow').css('visibility', 'hidden');
+    }
+    //if owner field has not been clicked ascending, show the up arrow 
+    if(!isClicked[1]){
+        console.log(isClicked);
+        $('#owner-top-arrow').css('visibility', 'visible');
+        $('#owner-bottom-arrow').css('visibility', 'hidden');
+        dogList.sort(compareOwnerNames);
+        isClicked[1] = true;
+    //if owner field has been clicked desending, show the down arrow
+    }else{
+        console.log(isClicked);
+        $('#owner-top-arrow').css('visibility', 'hidden');
+        $('#owner-bottom-arrow').css('visibility', 'visible');
+        dogList.reverse();
+        isClicked[1] = false;
+    }
+    displaySortedList();
+}
+
+function sortDogNames(){
+    //hide all sorting arrows for other fields
+    $('#owner-top-arrow').css('visibility', 'hidden');
+    $('#owner-bottom-arrow').css('visibility', 'hidden');
+    $('#breed-top-arrow').css('visibility', 'hidden');
+    $('#breed-bottom-arrow').css('visibility', 'hidden');
+    $('#age-top-arrow').css('visibility', 'hidden');
+    $('#age-bottom-arrow').css('visibility', 'hidden');
+    //check which sorting arrow (up or down) is showing
+    let isVisible = $('.#name-top-arrow').is(':visible');
+    if (isVisible){
+        $('.#name-top-arrow').hide();
+        $('.#name-bottom-arrow').show();
+    }
+    else {
+        
+    }
+    //sort the dog list by names
+    //display sorted list to screen
+}
+function sortNameField(){
+    //if owner or breed or age fields have been clicked, hide their sort arrows
+    if((isClicked[1] !== undefined) || (isClicked[2] !== undefined) || (isClicked[3] !== undefined)){
+        $('#owner-top-arrow').css('visibility', 'hidden');
+        $('#owner-bottom-arrow').css('visibility', 'hidden');
+        $('#breed-top-arrow').css('visibility', 'hidden');
+        $('#breed-bottom-arrow').css('visibility', 'hidden');
+        $('#age-top-arrow').css('visibility', 'hidden');
+        $('#age-bottom-arrow').css('visibility', 'hidden');
+    }
+    //if name field has not been clicked ascending, show the up arrow 
+    if(!isClicked[0]){
+        console.log(isClicked);
+        $('#name-top-arrow').css('visibility', 'visible');
+        $('#name-bottom-arrow').css('visibility', 'hidden');
+        dogList.sort(compareDogNames);
+        isClicked[0] = true;
+    //if name field has been clicked desending, show the down arrow
+    }else{
+        console.log(isClicked);
+        $('#name-top-arrow').css('visibility', 'hidden');
+        $('#name-bottom-arrow').css('visibility', 'visible');
+        dogList.reverse();
+        isClicked[0] = false;
+    }
+    displaySortedList();
+}
+
+function displaySortedList(){
+    //reverse list so they display in correct order when prepended
+    $('#tableBody').children().remove();
+    for(let dog of dogList){
+        displayDog(dog);
+    }
+}
+
+function storeDog(dog){
+    // let id;
+    let url = '/api/v1/dogs';
+    let method = 'POST';
+    let dataType = 'json';
+    let request = makeAjaxCall(url, dog, method, dataType);
+    request.done(function(data, textStatus, jqXHR) {
+        //add a dog to the main table view html
+	    displayDog(data);
+	    //add a dog to the tile view html
+	    displayDogTileView(data);
+	    //update the global dog list
+	    dogList.push(data);
+	    console.log('Dog successfully added!');
+    });
+    request.fail(function(jqXHR, textStatus, errorThrown) {
+        console.log('Add unsuccessful!, ', errorThrown);
+    });
+}
+
+function removeDog(id){
+    let url = `/api/v1/dogs/${id}.json`;
+    let method = 'DELETE';
+    let request = makeAjaxCall(url, null, method, null);
+    request.done(function(data, textStatus, jqXHR) {
+        let index = dogList.findIndex((element) => element.id == id );
+        dogList.splice(index, 1);
+        console.log('Successfully deleted!');
+    });
+    request.fail(function(jqXHR, textStatus, errorThrown) {
+        console.log('Error with deleting!, ', errorThrown);
+    });
+}
+
+function displayUndoButton(){
+    //if the array holding the dead dogs is empty
+    //  then hide the undo button
+    let isVisible = $('.undo').is(':visible');
+    if(!isVisible && deadDogs.length > 0){
+        $('.undo').show();
+    }
+}
+
+function undoDeletedDogHandler(){
+    //Click handler for undoing a deleted dog
+    $('.undo').click(function() {
+        let dog = deadDogs.pop(); //pop and get the last dog off the dead dog list
+        let url = 'api/v1/dogs';
+        let method = 'POST';
+        let dataType = 'json';
+        // make ajax call to create the dog again
+        let request = makeAjaxCall(url, dog, method, dataType);
+        request.done(function(data, textStatus, jqXHR) {
+            dogList.push(data); // place the dog in the dog list array
+            displayDog(data); // display the dog back on to the html view
+            displayDogTileView(data); //display dog back on html tile view
+            console.log('Undo Successfull!');
+        });
+        request.fail(function(jqXHR, textStatus, errorThrown) {
+            console.log(errorThrown);
+        });
+        // Hide the undo button when all dogs have been undone
+        if(deadDogs.length == 0){
+            $(this).hide();
+        }
+    });
+}
+
+function generateDogHtml(dog){
+    let dogHtml = `<tr id=${dog.id}>
+            <td><img src=${dog.photo}></td>
+            <td>${dog.name}</td>
+            <td>${dog.owner}</td>
+            <td>${dog.breed}</td>
+            <td>${dog.age}</td>
+            <td>${dog.isNeutered}</td>
+            <td>${dog.hasLicense}</td>
+            <td>${dog.hasShots}</td>
+            <td>
+                <button class="btn btn-default editDogBtn" data-toggle="modal" data-target="#editDogModal">
+                    <span class="glyphicon glyphicon-pencil text-primary" aria-hidden="true" ></span>
+                </button>
+                <button class="btn btn-default deleteDogBtn">
+                    <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
+                </button>
+            </td>
+        </tr>`;
+    return dogHtml;
+}
+
+function displayDog(dog){
+    //Add the new dog to the list
+    $('#tableBody').prepend(generateDogHtml(dog));
+    //Click handler for delete dog button
+    $('.deleteDogBtn:first').click(function(){
+        deadDogs.push(dog); //store deleted dog in temp storage
+        displayUndoButton(); //Show the undo button
+        removeDog(dog.id);  //remove dog from server side
+        $(this).parentsUntil('#tableBody').remove(); //remove dog from client in the list view
+        $(`#tile-${dog.id}`).remove(); //remove dog from client in the tile view
+    });
+    // handler to display dog in edit modal
+    $('.editDogBtn:first').click(function() {
+        console.log('You edited a dog');
+        //display the dog in the edit modal
+        fillEditFieldsWithSelectedDog(dog);
+        //store the non-edited dog for later comparison with edited dog
+        tempDog = dog;
+    });
+}
+
+function areDifferentDogs(dogA, dogB){
+    if (!dogA) return false
+    if (!dogB) return false
+    if (dogA.length == 0) return false
+    if (dogB.length == 0) return false
+    if (dogA.length !== dogB.length) return false
+    //check if the dogs are not the same
+    for (let key in dogA){
+        if (dogA[key] != dogB[key]) return true
+    }
+    return false;
+}
+
+function gatherEditedDogValues(id, photo){
+    //gather the edited fields
+    let editedDog = {
+        'id': tempDog.id,
+        'photo': tempDog.photo,
+        'name': $('#editPetName').val(),
+        'owner': $('#editOwnerName').val(),
+        'breed': $('#editBreedType').val(),
+        'age': $('#editAgeField').val(),
+        'isNeutered': $('#editNeuteredField').val(),
+        'hasLicense': $('#editLicensedField').val(),
+        'hasShots': $('#editShotsField').val()
+    };
+    return editedDog;
+}
+
+function fillEditFieldsWithSelectedDog(dog){
+    $('#editModalLabel').text(`Edit ${dog.name}`);
+    $('#editPetName').val(dog.name);
+    $('#editOwnerName').val(dog.owner);
+    $('#editBreedType').val(dog.breed);
+    $('#editAgeField').val(dog.age);
+    $('#currShots').attr('value', dog.hasShots);
+    $('#currShots').text(dog.hasShots);
+    $('#currLicense').attr('value', dog.hasLicense);
+    $('#currLicense').text(dog.hasLicense);
+    $('#currNeutered').attr('value', dog.isNeutered);
+    $('#currNeutered').text(dog.isNeutered);
+    return dog;
+}
+function replaceDogTile(dog){
+    $(`#tile-${dog.id}`).replaceWith(generateDogTileHtml(dog));
+}
+function replaceDog(dog){
+    $(`#${dog.id}`).replaceWith(generateDogHtml(dog));
+}
+function makeUpdateToDog(editedDog){
+    //get the dogs id
+    let id = editedDog.id;
+    let url = `/api/v1/dogs/${id}.json`;
+    let method = 'PUT';
+    let dataType = 'json';
+    let request = makeAjaxCall(url, editedDog, method, dataType);
+    request.done(function(data, textStatus, jqXHR){
+        //remove old dog from dogList array
+        let index = dogList.findIndex( dog => dog.id == editedDog.id );
+        dogList.splice(index, 1);
+        //place the updated dog in the dog list array
+        dogList.push(data);
+        // display the dog back on to the client list
+        // replace dog at id for both table and tile views
+        replaceDog(data);
+        replaceDogTile(data);
+        console.log(`Success updating ${data.name}`);
+    });
+    request.fail(function( jqXHR, textStatus, errorThrown ) {
+        console.log(`Error updating ${editedDog.name}`);
+    });
+}
+
+function makeAjaxCall(_url, _data, _method, _dataType){
+    let request = $.ajax(_url, {
+        data: _data,
+        method: _method,
+        dataType: _dataType,
+    });
+    return request;
+}
+
+function loadDogsFromServer(){
+    //LOAD THE DOG LIST
+    // Method One: Get a list of dog objects
+    // $.getJSON('/api/v1/dogs.json', function( data ) {
+    //     dogList = data;
+    //     for(let dog of dogList){
+    //         displayDog(dog);
+    //         displayDogTileView(dog);
+    //     }
+    // });
+    // Method Two: Get a list of id's and call GET on each dog object with id
+    $.getJSON('/api/v1/dogs.json', function( data ) {
+        data.sort(compareNumbers);
+        for(let id of data){
+            //make an ajax call on each id
+            $.getJSON(`/api/v1/dogs/${id}.json`, function(dog){
+                dogList.push(dog);
+                displayDog(dog);
+                displayDogTileView(dog);
+            });
+        }
+    });
+}
+
+function generateDogTileHtml(dog){
+    let dogTileHtml = 
+        `<div id ="tile-${dog.id}" class="well tile">
+            <div>
+                <img src=${dog.photo}>
+            </div>
+            <div>
+                <h3><span>${dog.name}</span></h3>
+                <span>Owner: ${dog.owner}</span><br>
+                <span>Breed: ${dog.breed}</span><br>
+                <span>Age: ${dog.age}</span><br>
+                <span>Licensed: ${dog.hasLicense}</span><br>
+                <span>Neutered: ${dog.isNeutered}</span><br>
+                <span>Shots: ${dog.hasShots}</span>
+            </div>
+         </div>`;
+    return dogTileHtml;
+}
+
+function displayDogTileView(dog){
+    $('#tile-container').append(generateDogTileHtml(dog));
+}
+</script>
+</body>
+</html>

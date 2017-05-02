@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Jasmine as a UI</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.4.1/jasmine.css"></link>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.4.1/jasmine.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.4.1/jasmine-html.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.4.1/boot.js"></script>
+
+<script>
+/*global $*/
+/*global fail*/
+/*global expect*/
+
+// HOW TO USE //
+/*
+    Set the numOfDogs to the actual number of dogs in the dogs folder
+    set the expectedId to the id of the last dog in the dogs folder + 1
+    This unit test will create a dog, read it, update it then delete it, then list dog id's
+*/
+describe("Full REST API for CRUDL", function() {
+    let expectedId = 11;
+    let numOfDogs = 10;
+    //TODO Test CREATE
+    it('should Create', function(){
+        let dogData = null;
+        let dog = {
+            photo: '', name: 'Big Red',
+            owner: 'Bradford Tester', breed: 'Great Dane',
+            age: 6, isNeutered: true, hasLicense: true, hasShots: false
+        };
+        let url = '/api/v1/dogs';
+        var jqxhr = $.ajax({
+                url: url,
+                method: 'POST',
+                data: dog,
+                async: false,
+                // dataType: 'json',
+                success: function(dataBack, textStatus) {
+                    dogData = dataBack;
+                    console.log(dogData);
+                },
+                error: function() {
+                    fail(`failed to get ${url}`);
+                }
+            }); 
+        expect(dogData.id).toEqual(expectedId);
+        expect(dogData.name).not.toEqual('Big Blue');
+        expect(dogData.name).toEqual('Big Red');
+        expect(dogData.owner).toEqual('Bradford Tester');
+        expect(dogData.breed).toEqual('Great Dane');
+        expect(dogData.age).toEqual('6');
+        expect(dogData.isNeutered).toEqual('true');
+        expect(dogData.hasLicense).toEqual('true');
+        expect(dogData.hasShots).toEqual('false');
+    });
+    
+    //Test READ
+    it('should Read', function() {
+        var dogData = null;
+        var url = `/api/v1/dogs/${expectedId}.json`;
+        var jqxhr = $.ajax({
+                url: url,
+                method: 'GET',
+                async: false,
+                dataType: 'json',
+                success: function(dataBack, textStatus) {
+                    dogData = dataBack;
+                },
+                error: function() {
+                    fail(`failed to get ${url}`);
+                }
+            });
+        expect(dogData.name).toBeDefined();
+        expect(dogData.owner).toBeDefined();
+        expect(dogData.breed).toBeDefined();
+        expect(dogData.age).toBeDefined();
+        
+        expect(dogData.name).not.toEqual('Big Blue');
+        expect(dogData.owner).not.toBe(null);
+        expect(dogData.breed).not.toBe(null);
+        expect(dogData.age).not.toBe(null);
+        
+        expect(dogData.id).toEqual(expectedId);
+        expect(dogData.name).toEqual('Big Red');
+        expect(dogData.owner).toEqual('Bradford Tester');
+        expect(dogData.breed).toEqual('Great Dane');
+        expect(dogData.age).toEqual('6');
+        expect(dogData.isNeutered).toEqual('true');
+        expect(dogData.hasLicense).toEqual('true');
+        expect(dogData.hasShots).toEqual('false');
+    });
+
+    //TODO Test UPDATE
+    it('should Update', function(){
+        let dogData = null;
+        let updatedDog = {
+            id: expectedId, name: 'Little Blue', owner: 'Bradford Tester', breed: 'Great Dane',
+            age: 6, isNeutered: true, hasLicense: true, hasShots: false
+        };   
+        let url = `api/v1/dogs/${expectedId}.json`;
+        let jqXHR = $.ajax({
+            url: url,
+            method: 'PUT',
+            data: updatedDog,
+            async: false,
+            dataType: 'json',
+            success: function(dataBack, textStatus, jqXHR){
+                dogData = dataBack;  
+            },
+            error: function() {
+                fail(`failed to update ${url}`);
+            }
+        });
+        expect(dogData.name).toBeDefined();
+        expect(dogData.owner).not.toBe(null);
+        expect(dogData.name).toEqual('Little Blue');
+        expect(dogData.name).not.toEqual('Big Red');
+    });
+    
+    it("should Delete ", function() {
+    //call jQuery
+        var url = `/api/v1/dogs/${expectedId}.json`;
+        var actualStatusCode = 0;
+        $.ajax({
+            url: url,
+            method: 'DELETE',
+            async: false,
+            dataType: 'json',
+            success: function(dataBack, textStatus, jqXHR) {
+                actualStatusCode = jqXHR.status;
+            },
+            error: function() {
+                fail(`failed to delete ${url}`);
+            }
+        });
+        expect(actualStatusCode).not.toEqual(500);
+        expect(actualStatusCode).not.toEqual(404);
+        expect(actualStatusCode).toEqual(204);
+    });
+    it("should Not Be Found on Delete", function() {
+    //call jQuery
+        var url = `/api/v1/dogs/${expectedId}.json`;
+        var actualStatusCode = 0;
+        $.ajax({
+            url: url,
+            method: 'DELETE',
+            async: false,
+            dataType: 'json',
+            success: function(dataBack, textStatus, jqXHR) {
+                actualStatusCode = jqXHR.status;
+            },
+            error: function( jqXHR, textStatus, errorThrown) {
+                actualStatusCode = jqXHR.status;
+                // fail(`failed to delete ${url}`);
+            }
+        });
+        expect(actualStatusCode).not.toEqual(204);
+        expect(actualStatusCode).not.toEqual(500);
+        expect(actualStatusCode).toEqual(404);
+    });
+
+    it("should List", function() {
+        $.ajax({
+            url: '/api/v1/dogs.json',
+            method: 'GET',
+            async: false,
+            dataType: 'json',
+            success: function(dataBack, textStatus) {
+                expect(dataBack).not.toBe(null);
+                expect(dataBack).toBeDefined();
+                expect(dataBack.length).not.toEqual(0);
+                expect(dataBack.length).not.toEqual(expectedId);
+                expect(dataBack.length).toEqual(numOfDogs);
+            }
+        });
+    });
+
+});
+</script>
+</head>
+
+<body>
+</body>
+
+</html>

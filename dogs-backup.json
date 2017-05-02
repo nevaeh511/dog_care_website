@@ -1,0 +1,92 @@
+[
+    {
+        "photo": "dog-photos/border-collie.jpg",
+        "name": "Rover",
+        "owner": "Mary Michaels",
+        "breed": "Border Collie",
+        "isNeutered": "No",
+        "hasLicense": "Yes",
+        "hasShots": "Yes"
+    },
+    {
+        "photo": "dog-photos/golden-retriever.jpg",
+        "name": "Spot",
+        "owner": "John Beach",
+        "breed": "Golden Retriever",
+        "isNeutered": "No",
+        "hasLicense": "Yes",
+        "hasShots": "Yes"
+    },
+    {
+        "photo": "dog-photos/chihuahua.jpg",
+        "name": "Tony",
+        "owner": "Josh Snells",
+        "breed": "Chihuahua",
+        "isNeutered": "No",
+        "hasLicense": "Yes",
+        "hasShots": "Yes"
+    },
+    {
+        "photo": "dog-photos/husky.jpg",
+        "name": "Lilly",
+        "owner": "Kyle Roberts",
+        "breed": "Siberian Husky",
+        "isNeutered": "No",
+        "hasLicense": "Yes",
+        "hasShots": "Yes"
+    },
+    {
+        "photo": "dog-photos/pomeranian-white.jpg",
+        "name": "Sugar",
+        "owner": "Beth Sanders",
+        "breed": "Pomeranian",
+        "isNeutered": "No",
+        "hasLicense": "No",
+        "hasShots": "No"
+    },
+    {
+        "photo": "dog-photos/greyhound.jpg",
+        "name": "Starlight",
+        "owner": "Muhammad Kumar",
+        "breed": "Grey Hound",
+        "isNeutered": "Yes",
+        "hasLicense": "No",
+        "hasShots": "No"
+    },
+    {
+        "photo": "dog-photos/pomeranian.jpg",
+        "name": "Cosmo",
+        "owner": "Britteny Willilams",
+        "breed": "Pomeranian",
+        "isNeutered": "No",
+        "hasLicense": "Yes",
+        "hasShots": "No"
+    },
+    {
+        "photo": "dog-photos/rottwriller.jpg",
+        "name": "Rott",
+        "owner": "Daniell Murrow",
+        "breed": "Rottweiler",
+        "isNeutered": "Yes",
+        "hasLicense": "Yes",
+        "hasShots": "Yes"
+    },
+    {
+        "photo": "dog-photos/collie.jpg",
+        "name": "Fingers",
+        "owner": "Adriane Tyree",
+        "breed": "Collie",
+        "isNeutered": "No",
+        "hasLicense": "Yes",
+        "hasShots": "No"
+    },
+    {
+        "photo": "dog-photos/german-shephard.jpg",
+        "name": "Groot",
+        "owner": "Abraham Orr",
+        "breed": "German Shephard",
+        "isNeutered": "No",
+        "hasLicense": "No",
+        "hasShots": "Yes"
+    }
+]

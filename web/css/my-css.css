@@ -1,0 +1,114 @@
+
+header h1{
+  font-family: "Century Gothic", sans-serif;
+}
+
+body{
+  font-family: "Century Gothic", sans-serif;
+  background-image: url('.././images/happy-dog-background.jpg');
+  background-size: 100%;
+  /*background: linear-gradient(#6ba3ff, white);*/
+}
+
+thead{
+  color:#337ab7;
+}
+td img{
+    width: 120px;
+    height: 100px;
+}
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #dddddd;
+  opacity: 0.9;
+}
+.table-striped > tbody > tr:nth-of-type(even) {
+  background-color: #bec1c6;
+  opacity: 0.9;
+}
+/*thead > tr{*/
+/*    background-color: #dddddd;*/
+/*}*/
+.table-hover > tbody > tr:hover {
+  background-color: #777;
+  color: white;
+}
+.modal-header > img{
+  position: relative;
+  width: 30%;
+  float: right;
+}
+.modal-title{
+  float: left;
+  font-weight: Bold;
+}
+tbody > tr {
+  font-weight: bold;
+}
+nav {
+  background: linear-gradient(#777, white);
+}
+.page-header{
+  background-image: url(".././dog-photos/dogs-in-line-header-background.jpg");
+  /*background-image: url(".././dog-photos/dog-header-background.jpg");*/
+  background-size: 26%;
+  height: 125px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+#main-header span{
+  /*background: linear-gradient(#777, white);*/
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 10px 10px 5px grey;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-weight: bold;
+}
+.undo{
+  display: none;
+}
+#tile-container{
+  display: none;
+  margin-left: 0px;
+}
+.tile img {
+  margin: auto;
+  width: 100%;
+  height: 188px;
+}
+
+.addDogForm{
+  display: none;
+  margin: auto;
+  width: 75%;
+}
+
+.toggle-view{
+  border: solid thin;
+}
+
+a {
+  text-decoration: none;
+}
+#name-top-arrow, #name-bottom-arrow,
+#owner-top-arrow, #owner-bottom-arrow,
+#breed-top-arrow, #breed-bottom-arrow,
+#age-top-arrow, #age-bottom-arrow{
+  visibility: hidden;
+}
+#list-icon, #tile-icon{
+  width: auto;
+  padding: 2px;
+}
+.tile{
+  width: 20%;
+  float: left;
+  margin: 5px;
+}
+th a {
+  color: white;
+}
+
+
+
+
