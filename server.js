@@ -14,7 +14,7 @@ const WEB = `${__dirname}/web`;
 // const PATH = __dirname.slice(0, __dirname.lastIndexOf('/'));
 const PATH = __dirname;
 console.log(PATH);
-let PORT = process.env.PORT;
+let PORT = process.env.PORT || 3000;
 
 //Add middleware
 app.use(logger('dev'));
