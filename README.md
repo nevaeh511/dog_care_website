@@ -1,4 +1,6 @@
-
+## Running the app
+In the terminal, navigate to the **server.js** file
+Run **npm server.js**
 ## Deleting and Undoing dogs
 do not delete a dog or dogs and reload the page. The dogs will not be in the dogs directory if this
 is done.
